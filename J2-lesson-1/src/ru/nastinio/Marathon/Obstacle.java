@@ -48,7 +48,9 @@ class MainCross {
     public static void main(String[] args) {
 
         Course course = new Course();
-        Team team = new Team("DreamTeam");
+
+        Competitor[] listParticipant = {new Human("Василий"), new Human("Гоша"), new Cat("Васька"), new Dog("Шарик")};
+        Team team = new Team("DreamTeam", listParticipant);
 
         course.doiIt(team);
 

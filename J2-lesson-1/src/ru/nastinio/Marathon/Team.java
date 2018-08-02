@@ -2,11 +2,11 @@ package ru.nastinio.Marathon;
 
 public class Team {
     private String name;
-    public Competitor[] listParticipant  = {new Human("Василий"), new Human("Гоша"), new Cat("Васька"), new Dog("Шарик")};
+    public Competitor[] listParticipant;
 
-
-    public Team(String name) {
+    public Team(String name, Competitor[] listParticipant) {
         this.name = name;
+        this.listParticipant = listParticipant;
     }
 
     public String getName() {
@@ -17,7 +17,7 @@ public class Team {
         System.out.println("------------------------------------");
         System.out.println("Список участников, прошедших марафон\n");
         for (Competitor comp : listParticipant) {
-            if (comp.isOnDistance()){
+            if (comp.isOnDistance()) {
                 comp.info();
             }
         }
