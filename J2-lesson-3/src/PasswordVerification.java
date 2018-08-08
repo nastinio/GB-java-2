@@ -11,25 +11,22 @@ public class PasswordVerification {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
 
-        System.out.println(pv.checkPassword(input));
+        System.out.println(pv.checkPasswordSimpleWay(input));
 
-    }
+        //pv.testCheckPassword();
+       /* String input = "ohhh)hda6Ldh";
+        System.out.println(input+": "+pv.checkPassword(input));*/
 
-    public void testCheckPassword(){
-        ArrayList<String> array = new ArrayList<>();
-        array.add("qwertyui");
-        array.add("ASWDFFFG");
-        array.add("123456789");
-        array.add("<>@$%^$%^@");
-        array.add(" jsh 2Asdjj,");
-        array.add("QwerTy69@4");
-
-        for(String currentPassword:array){
-            System.out.println(currentPassword+": "+checkPassword(currentPassword));
-        }
     }
 
     public boolean checkPassword(String input) {
+        Pattern p1 = Pattern.compile("^(?=\\S{8})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*(\\W|_)).*$");
+        Matcher m1 = p1.matcher(input);
+
+        return m1.find();
+    }
+
+    public boolean checkPasswordSimpleWay(String input) {
         Pattern p1 = Pattern.compile("^\\S{8,}$");
         Matcher m1 = p1.matcher(input);
 
@@ -49,4 +46,25 @@ public class PasswordVerification {
         return m1.find() && m2.find()&& m3.find()&& m4.find()&& m5.find();
     }
 
+    public void testCheckPassword(){
+        ArrayList<String> array = new ArrayList<>();
+        array.add("qwertyui");
+        array.add("ASWDFFFG");
+        array.add("123456789");
+        array.add("<>@$%^$%^@");
+        array.add(" jsh 2Asdjj,");
+        array.add("QwerTy69@4");
+
+        System.out.println("Simple way:\n");
+        for(String currentPassword:array){
+            System.out.println(currentPassword+": "+ checkPasswordSimpleWay(currentPassword));
+        }
+
+        System.out.println("===================");
+
+        System.out.println("Smart way:\n");
+        for(String currentPassword:array){
+            System.out.println(currentPassword+": "+ checkPassword(currentPassword));
+        }
+    }
 }
