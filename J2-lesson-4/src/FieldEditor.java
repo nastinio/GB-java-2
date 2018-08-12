@@ -1,8 +1,6 @@
 import de.javasoft.plaf.synthetica.SyntheticaSimple2DLookAndFeel;
-import de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,13 +9,11 @@ public class FieldEditor {
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(new SyntheticaSimple2DLookAndFeel());
-            //UIManager.setLookAndFeel(new SyntheticaStandardLookAndFeel());
-            //UIManager.setLookAndFeel(new NimbusLookAndFeel());
         } catch (Exception e) {
         }
 
         FieldEditorWindow window = new FieldEditorWindow();
-        window.drawStartTextFields(false,"Фамилия","Имя","Отчество");
+        window.drawTextFields(false);
 
     }
 }
@@ -27,11 +23,12 @@ class FieldEditorWindow extends JFrame {
     public FieldEditorWindow() {
         setTitle("FieldEditor");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         setVisible(true);
     }
 
-    public void drawStartTextFields(Boolean isEditMode,String... fields) {
+    public void drawTextFields(Boolean isEditMode, String... fields) {
         if(isEditMode){
             setSize(430, 310);
         }else{
@@ -61,9 +58,18 @@ class FieldEditorWindow extends JFrame {
         logicPanel.setLayout(new GridLayout(4, 1));
 
         int sizeTextField = 25;
-        JTextField lastNameTF = new JTextField(fields[0], sizeTextField);
-        JTextField firstNameTF = new JTextField(fields[1], sizeTextField);
-        JTextField patronymicTF = new JTextField(fields[2], sizeTextField);
+        JTextField lastNameTF = new JTextField("", sizeTextField);
+        JTextField firstNameTF = new JTextField( "",sizeTextField);
+        JTextField patronymicTF = new JTextField("", sizeTextField);
+        try{
+            lastNameTF.setText(fields[0]);
+            firstNameTF.setText(fields[1]);
+            patronymicTF.setText(fields[2]);
+        }catch(ArrayIndexOutOfBoundsException e){
+            lastNameTF.setText("Фамилия");
+            firstNameTF.setText("Имя");
+            patronymicTF.setText("Отчество");
+        }
 
         if(!isEditMode){
             lastNameTF.setEnabled(false);
@@ -83,7 +89,7 @@ class FieldEditorWindow extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     FieldEditorWindow window = new FieldEditorWindow();
-                    window.drawStartTextFields(true,lastNameTF.getText(),firstNameTF.getText(),patronymicTF.getText());
+                    window.drawTextFields(true,lastNameTF.getText(),firstNameTF.getText(),patronymicTF.getText());
                     setVisible(false);
 
                 }
@@ -96,7 +102,7 @@ class FieldEditorWindow extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     FieldEditorWindow window = new FieldEditorWindow();
-                    window.drawStartTextFields(false,lastNameTF.getText(),firstNameTF.getText(),patronymicTF.getText());
+                    window.drawTextFields(false,lastNameTF.getText(),firstNameTF.getText(),patronymicTF.getText());
 
                     setVisible(false);
                 }
